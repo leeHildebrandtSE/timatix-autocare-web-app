@@ -29,7 +29,7 @@ export default function NavBar() {
             fontSize: '24px',
             fontWeight: 'bold'
           }}>
-            T
+            <img src="images/logo_only.png" alt="Timatix AutoCare Logo" className="logo"></img>
           </div>
           <div className="brand-text" style={{ fontSize: '20px', fontWeight: '700', color: '#667eea' }}>
             Timatix
