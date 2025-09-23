@@ -16,6 +16,58 @@ export default function Users() {
   const { showLoading, hideLoading } = useLoading();
   const { showToast } = useToast();
 
+  // Helper function to get user profile photo/avatar
+  const getUserPhoto = (user) => {
+    // For now, using emojis based on role and index, but you can replace with actual photos
+    const rolePhotos = {
+      'OPS_MANAGER': ['👨‍💼', '👩‍💼', '🧑‍💼'],
+      'MECHANIC': ['👨‍🔧', '👩‍🔧', '🧑‍🔧'],
+      'CLIENT': ['👨‍💻', '👩‍💻', '🧑‍💻', '👨‍🎓', '👩‍🎓', '🧑‍⚕️'],
+      'CLEANER': ['👨‍🧹', '👩‍🧹', '🧑‍🧹'],
+      'ADMIN': ['👨‍⚖️', '👩‍⚖️', '🧑‍⚖️']
+    };
+
+    const photos = rolePhotos[user.role] || rolePhotos['CLIENT'];
+    const index = user.name ? user.name.length % photos.length : 0;
+    return photos[index];
+  };
+
+  // Helper function to get role-based gradient colors
+  const getRoleColors = (role) => {
+    const colorMap = {
+      'OPS_MANAGER': { primary: '#dc2626', secondary: '#991b1b' }, // Red
+      'MECHANIC': { primary: '#2563eb', secondary: '#1d4ed8' }, // Blue  
+      'CLIENT': { primary: '#059669', secondary: '#047857' }, // Green
+      'CLEANER': { primary: '#7c3aed', secondary: '#6d28d9' }, // Purple
+      'ADMIN': { primary: '#ea580c', secondary: '#c2410c' } // Orange
+    };
+    return colorMap[role] || colorMap['CLIENT'];
+  };
+
+  // Helper function to generate realistic profile data
+  const generateUserProfile = (user, index) => {
+    const profilePictures = [
+      '👨‍💼', '👩‍💼', '👨‍🔧', '👩‍🔧', '👨‍💻', '👩‍💻',
+      '🧑‍💼', '🧑‍🔧', '🧑‍💻', '👨‍🎓', '👩‍🎓', '🧑‍🎓',
+      '👨‍⚕️', '👩‍⚕️', '🧑‍⚕️', '👨‍🎨', '👩‍🎨', '🧑‍🎨'
+    ];
+
+    return {
+      ...user,
+      avatar: user.name ? user.name.split(' ').map(n => n[0]).join('').toUpperCase() : 'U',
+      profilePhoto: getUserPhoto(user),
+      joinDate: getJoinDate(index),
+      lastActive: getLastActive(index),
+      department: getDepartment(user.role),
+      phone: getPhone(index),
+      location: getLocation(index),
+      jobsCompleted: getJobsCompleted(user.role, index),
+      rating: getRating(user.role, index),
+      isOnline: Math.random() > 0.3, // 70% chance of being online
+      initials: user.name ? user.name.split(' ').map(n => n[0]).join('').toUpperCase() : 'U'
+    };
+  };
+
   useEffect(() => {
     let mounted = true;
     (async () => {
@@ -25,18 +77,7 @@ export default function Users() {
         if (!mounted) return;
         
         // Enhance user data with additional properties for better UX
-        const enhancedUsers = data.map((user, index) => ({
-          ...user,
-          avatar: getAvatar(user.name),
-          joinDate: getJoinDate(index),
-          lastActive: getLastActive(index),
-          department: getDepartment(user.role),
-          phone: getPhone(index),
-          location: getLocation(index),
-          jobsCompleted: getJobsCompleted(user.role, index),
-          rating: getRating(user.role, index),
-          isOnline: Math.random() > 0.3 // 70% chance of being online
-        }));
+        const enhancedUsers = data.map((user, index) => generateUserProfile(user, index));
         
         setUsers(enhancedUsers);
         setFilteredUsers(enhancedUsers);
@@ -55,10 +96,6 @@ export default function Users() {
   }, [showLoading, hideLoading, showToast]);
 
   // Helper functions to generate realistic user data
-  const getAvatar = (name) => {
-    return name ? name.split(' ').map(n => n[0]).join('').toUpperCase() : 'U';
-  };
-
   const getJoinDate = (index) => {
     const today = new Date();
     const monthsAgo = (index * 3) + 1;
@@ -181,18 +218,14 @@ export default function Users() {
       const createdUser = await addUser(userData);
       
       // Enhance the new user data
-      const enhancedUser = {
+      const enhancedUser = generateUserProfile({
         ...createdUser,
-        avatar: getAvatar(createdUser.name),
         joinDate: new Date().toISOString().split('T')[0],
         lastActive: 'Just now',
-        department: getDepartment(createdUser.role),
-        phone: '+27 81 000 0000',
-        location: 'Cape Town',
         jobsCompleted: 0,
         rating: null,
         isOnline: true
-      };
+      }, users.length);
       
       setUsers(prev => [...prev, enhancedUser]);
       setNewUser({ name: '', email: '', role: 'CLIENT' });
@@ -524,7 +557,7 @@ export default function Users() {
         </div>
       )}
 
-      {/* Enhanced User Grid */}
+      {/* Enhanced User Grid with Profile Photos */}
       <div className="users-table">
         {filteredUsers.length === 0 ? (
           <div className="empty-state" style={{
@@ -561,156 +594,168 @@ export default function Users() {
             )}
           </div>
         ) : (
-          filteredUsers.map((user) => (
-            <div key={user.id} className="user-card enhanced">
-              {/* User Header */}
-              <div style={{
-                display: 'flex',
-                alignItems: 'flex-start',
-                gap: 'var(--spacing-4)',
-                marginBottom: 'var(--spacing-4)'
-              }}>
+          filteredUsers.map((user) => {
+            const roleColors = getRoleColors(user.role);
+            return (
+              <div key={user.id} className="user-card enhanced">
+                {/* User Header with Enhanced Profile Photo */}
                 <div style={{
-                  position: 'relative',
                   display: 'flex',
-                  alignItems: 'center',
-                  justifyContent: 'center',
-                  width: '60px',
-                  height: '60px',
-                  borderRadius: 'var(--border-radius-full)',
-                  background: 'linear-gradient(135deg, var(--primary-color), var(--secondary-color))',
-                  color: 'white',
-                  fontSize: 'var(--text-xl)',
-                  fontWeight: 'var(--font-weight-bold)',
-                  boxShadow: 'var(--shadow-md)',
-                  flexShrink: 0
+                  alignItems: 'flex-start',
+                  gap: 'var(--spacing-4)',
+                  marginBottom: 'var(--spacing-4)'
                 }}>
-                  {user.avatar}
-                  {user.isOnline && (
-                    <div style={{
-                      position: 'absolute',
-                      bottom: '2px',
-                      right: '2px',
-                      width: '16px',
-                      height: '16px',
-                      background: 'var(--success-color)',
-                      borderRadius: 'var(--border-radius-full)',
-                      border: '3px solid var(--bg-surface)',
-                      boxShadow: 'var(--shadow-sm)'
-                    }} />
-                  )}
-                </div>
-                
-                <div style={{ flex: 1, minWidth: 0 }}>
-                  <div style={{
+                  <div className="user-profile-photo" style={{
+                    position: 'relative',
+                    width: '80px',
+                    height: '80px',
+                    borderRadius: 'var(--border-radius-full)',
+                    background: `linear-gradient(135deg, ${roleColors.primary}, ${roleColors.secondary})`,
                     display: 'flex',
                     alignItems: 'center',
-                    gap: 'var(--spacing-2)',
-                    marginBottom: 'var(--spacing-1)'
-                  }}>
-                    <h4 style={{
+                    justifyContent: 'center',
+                    fontSize: '2.5rem',
+                    boxShadow: 'var(--shadow-lg)',
+                    border: '3px solid var(--bg-surface)',
+                    flexShrink: 0,
+                    transition: 'all var(--transition-base)',
+                    overflow: 'hidden',
+                    cursor: 'pointer'
+                  }}
+                  onMouseEnter={(e) => {
+                    e.target.style.transform = 'scale(1.05)';
+                    e.target.style.boxShadow = '0 12px 40px rgba(0, 0, 0, 0.2)';
+                  }}
+                  onMouseLeave={(e) => {
+                    e.target.style.transform = 'scale(1)';
+                    e.target.style.boxShadow = 'var(--shadow-lg)';
+                  }}
+                  >
+                    {/* Profile photo or emoji */}
+                    <span style={{ 
+                      textShadow: '0 2px 8px rgba(0, 0, 0, 0.3)',
+                      zIndex: 2,
+                      position: 'relative'
+                    }}>
+                      {user.profilePhoto}
+                    </span>
+                    
+                    {/* Online status indicator */}
+                    {user.isOnline && (
+                      <div style={{
+                        position: 'absolute',
+                        bottom: '4px',
+                        right: '4px',
+                        width: '18px',
+                        height: '18px',
+                        background: 'var(--success-color)',
+                        borderRadius: 'var(--border-radius-full)',
+                        border: '3px solid var(--bg-surface)',
+                        boxShadow: '0 2px 8px rgba(0, 0, 0, 0.2)',
+                        animation: 'userOnlinePulse 2s ease-in-out infinite',
+                        zIndex: 3
+                      }} />
+                    )}
+
+                    {/* Gradient overlay */}
+                    <div style={{
+                      position: 'absolute',
+                      top: 0,
+                      left: 0,
+                      right: 0,
+                      bottom: 0,
+                      background: 'linear-gradient(135deg, rgba(255,255,255,0.3) 0%, transparent 50%, rgba(0,0,0,0.1) 100%)',
+                      borderRadius: 'var(--border-radius-full)',
+                      zIndex: 1
+                    }} />
+
+                    {/* Initials fallback (hidden behind photo) */}
+                    <div style={{
+                      position: 'absolute',
+                      top: '50%',
+                      left: '50%',
+                      transform: 'translate(-50%, -50%)',
+                      fontSize: 'var(--text-xl)',
+                      fontWeight: 'var(--font-weight-bold)',
+                      color: 'rgba(255, 255, 255, 0.3)',
+                      zIndex: 0
+                    }}>
+                      {user.initials}
+                    </div>
+                  </div>
+                  
+                  <div style={{ flex: 1, minWidth: 0 }}>
+                    <div style={{
+                      display: 'flex',
+                      alignItems: 'center',
+                      gap: 'var(--spacing-2)',
+                      marginBottom: 'var(--spacing-1)'
+                    }}>
+                      <h4 style={{
+                        margin: 0,
+                        fontSize: 'var(--text-lg)',
+                        fontWeight: 'var(--font-weight-semibold)',
+                        color: 'var(--text-primary)',
+                        overflow: 'hidden',
+                        textOverflow: 'ellipsis',
+                        whiteSpace: 'nowrap'
+                      }}>
+                        {user.name}
+                      </h4>
+                      {user.isOnline && (
+                        <span style={{
+                          fontSize: 'var(--text-xs)',
+                          color: 'var(--success-color)',
+                          fontWeight: 'var(--font-weight-medium)',
+                          background: 'rgba(16, 185, 129, 0.1)',
+                          padding: '2px 8px',
+                          borderRadius: 'var(--border-radius-full)',
+                          border: '1px solid rgba(16, 185, 129, 0.2)'
+                        }}>
+                          ● Online
+                        </span>
+                      )}
+                    </div>
+                    
+                    <p style={{
                       margin: 0,
-                      fontSize: 'var(--text-lg)',
-                      fontWeight: 'var(--font-weight-semibold)',
-                      color: 'var(--text-primary)',
+                      color: 'var(--text-secondary)',
+                      fontSize: 'var(--text-sm)',
+                      marginBottom: 'var(--spacing-2)',
                       overflow: 'hidden',
                       textOverflow: 'ellipsis',
                       whiteSpace: 'nowrap'
                     }}>
-                      {user.name}
-                    </h4>
-                    {user.isOnline && (
-                      <span style={{
-                        fontSize: 'var(--text-xs)',
-                        color: 'var(--success-color)',
-                        fontWeight: 'var(--font-weight-medium)',
-                        background: 'var(--bg-accent)',
-                        padding: '2px 6px',
-                        borderRadius: 'var(--border-radius-sm)'
-                      }}>
-                        Online
+                      {user.email}
+                    </p>
+                    
+                    <div style={{
+                      display: 'flex',
+                      gap: 'var(--spacing-2)',
+                      alignItems: 'center',
+                      flexWrap: 'wrap'
+                    }}>
+                      <span className={`role-badge ${user.role?.toLowerCase().replace('_', '-') || 'client'}`}>
+                        {user.role?.replace('_', ' ') || 'CLIENT'}
                       </span>
-                    )}
-                  </div>
-                  
-                  <p style={{
-                    margin: 0,
-                    color: 'var(--text-secondary)',
-                    fontSize: 'var(--text-sm)',
-                    marginBottom: 'var(--spacing-2)',
-                    overflow: 'hidden',
-                    textOverflow: 'ellipsis',
-                    whiteSpace: 'nowrap'
-                  }}>
-                    {user.email}
-                  </p>
-                  
-                  <div style={{
-                    display: 'flex',
-                    gap: 'var(--spacing-2)',
-                    alignItems: 'center',
-                    flexWrap: 'wrap'
-                  }}>
-                    <span className={`role-badge ${user.role?.toLowerCase().replace('_', '-') || 'client'}`}>
-                      {user.role?.replace('_', ' ') || 'CLIENT'}
-                    </span>
-                    <span className={`status-badge ${user.status?.toLowerCase() || 'active'}`}>
-                      {user.status || 'ACTIVE'}
-                    </span>
+                      <span className={`status-badge ${user.status?.toLowerCase() || 'active'}`}>
+                        {user.status || 'ACTIVE'}
+                      </span>
+                    </div>
                   </div>
                 </div>
-              </div>
 
-              {/* User Details */}
-              <div style={{
-                display: 'grid',
-                gridTemplateColumns: 'repeat(auto-fit, minmax(120px, 1fr))',
-                gap: 'var(--spacing-3)',
-                marginBottom: 'var(--spacing-4)',
-                padding: 'var(--spacing-4)',
-                background: 'var(--bg-hover)',
-                borderRadius: 'var(--border-radius-lg)',
-                border: '1px solid var(--border-color)'
-              }}>
-                <div>
-                  <div style={{
-                    fontSize: 'var(--text-xs)',
-                    color: 'var(--text-muted)',
-                    textTransform: 'uppercase',
-                    fontWeight: 'var(--font-weight-semibold)',
-                    marginBottom: 'var(--spacing-1)'
-                  }}>
-                    Department
-                  </div>
-                  <div style={{
-                    fontSize: 'var(--text-sm)',
-                    color: 'var(--text-primary)',
-                    fontWeight: 'var(--font-weight-medium)'
-                  }}>
-                    {user.department}
-                  </div>
-                </div>
-                
-                <div>
-                  <div style={{
-                    fontSize: 'var(--text-xs)',
-                    color: 'var(--text-muted)',
-                    textTransform: 'uppercase',
-                    fontWeight: 'var(--font-weight-semibold)',
-                    marginBottom: 'var(--spacing-1)'
-                  }}>
-                    Location
-                  </div>
-                  <div style={{
-                    fontSize: 'var(--text-sm)',
-                    color: 'var(--text-primary)',
-                    fontWeight: 'var(--font-weight-medium)'
-                  }}>
-                    {user.location}
-                  </div>
-                </div>
-                
-                {user.rating && (
+                {/* User Details */}
+                <div style={{
+                  display: 'grid',
+                  gridTemplateColumns: 'repeat(auto-fit, minmax(120px, 1fr))',
+                  gap: 'var(--spacing-3)',
+                  marginBottom: 'var(--spacing-4)',
+                  padding: 'var(--spacing-4)',
+                  background: 'var(--bg-hover)',
+                  borderRadius: 'var(--border-radius-lg)',
+                  border: '1px solid var(--border-color)'
+                }}>
                   <div>
                     <div style={{
                       fontSize: 'var(--text-xs)',
@@ -719,73 +764,113 @@ export default function Users() {
                       fontWeight: 'var(--font-weight-semibold)',
                       marginBottom: 'var(--spacing-1)'
                     }}>
-                      Rating
+                      Department
                     </div>
                     <div style={{
-                      display: 'flex',
-                      alignItems: 'center',
-                      gap: 'var(--spacing-1)'
+                      fontSize: 'var(--text-sm)',
+                      color: 'var(--text-primary)',
+                      fontWeight: 'var(--font-weight-medium)'
                     }}>
-                      <span style={{
-                        fontSize: 'var(--text-sm)',
-                        color: 'var(--primary-color)',
-                        fontWeight: 'var(--font-weight-semibold)'
-                      }}>
-                        ⭐ {user.rating}
-                      </span>
+                      {user.department}
                     </div>
                   </div>
-                )}
-                
-                <div>
-                  <div style={{
-                    fontSize: 'var(--text-xs)',
-                    color: 'var(--text-muted)',
-                    textTransform: 'uppercase',
-                    fontWeight: 'var(--font-weight-semibold)',
-                    marginBottom: 'var(--spacing-1)'
-                  }}>
-                    Jobs
+                  
+                  <div>
+                    <div style={{
+                      fontSize: 'var(--text-xs)',
+                      color: 'var(--text-muted)',
+                      textTransform: 'uppercase',
+                      fontWeight: 'var(--font-weight-semibold)',
+                      marginBottom: 'var(--spacing-1)'
+                    }}>
+                      Location
+                    </div>
+                    <div style={{
+                      fontSize: 'var(--text-sm)',
+                      color: 'var(--text-primary)',
+                      fontWeight: 'var(--font-weight-medium)'
+                    }}>
+                      {user.location}
+                    </div>
                   </div>
-                  <div style={{
-                    fontSize: 'var(--text-sm)',
-                    color: 'var(--text-primary)',
-                    fontWeight: 'var(--font-weight-medium)'
-                  }}>
-                    {user.jobsCompleted}
+                  
+                  {user.rating && (
+                    <div>
+                      <div style={{
+                        fontSize: 'var(--text-xs)',
+                        color: 'var(--text-muted)',
+                        textTransform: 'uppercase',
+                        fontWeight: 'var(--font-weight-semibold)',
+                        marginBottom: 'var(--spacing-1)'
+                      }}>
+                        Rating
+                      </div>
+                      <div style={{
+                        display: 'flex',
+                        alignItems: 'center',
+                        gap: 'var(--spacing-1)'
+                      }}>
+                        <span style={{
+                          fontSize: 'var(--text-sm)',
+                          color: 'var(--primary-color)',
+                          fontWeight: 'var(--font-weight-semibold)'
+                        }}>
+                          ⭐ {user.rating}
+                        </span>
+                      </div>
+                    </div>
+                  )}
+                  
+                  <div>
+                    <div style={{
+                      fontSize: 'var(--text-xs)',
+                      color: 'var(--text-muted)',
+                      textTransform: 'uppercase',
+                      fontWeight: 'var(--font-weight-semibold)',
+                      marginBottom: 'var(--spacing-1)'
+                    }}>
+                      Jobs
+                    </div>
+                    <div style={{
+                      fontSize: 'var(--text-sm)',
+                      color: 'var(--text-primary)',
+                      fontWeight: 'var(--font-weight-medium)'
+                    }}>
+                      {user.jobsCompleted}
+                    </div>
                   </div>
                 </div>
-              </div>
 
-              {/* User Actions */}
-              <div style={{
-                display: 'flex',
-                justifyContent: 'space-between',
-                alignItems: 'center',
-                paddingTop: 'var(--spacing-4)',
-                borderTop: '1px solid var(--border-color)'
-              }}>
-                <div style={{
-                  fontSize: 'var(--text-xs)',
-                  color: 'var(--text-muted)'
-                }}>
-                  <div>Joined: {new Date(user.joinDate).toLocaleDateString()}</div>
-                  <div>Last seen: {user.lastActive}</div>
-                </div>
+                {/* User Actions */}
                 <div style={{
                   display: 'flex',
-                  gap: 'var(--spacing-2)'
+                  justifyContent: 'space-between',
+                  alignItems: 'center',
+                  paddingTop: 'var(--spacing-4)',
+                  borderTop: '1px solid var(--border-color)'
                 }}>
-                  <Button variant="ghost" style={{ fontSize: 'var(--text-sm)', padding: 'var(--spacing-2) var(--spacing-3)' }}>
-                    View Profile
-                  </Button>
-                  <Button variant="secondary" style={{ fontSize: 'var(--text-sm)', padding: 'var(--spacing-2) var(--spacing-3)' }}>
-                    Edit User
-                  </Button>
+                  <div style={{
+                    fontSize: 'var(--text-xs)',
+                    color: 'var(--text-muted)'
+                  }}>
+                    <div>Joined: {new Date(user.joinDate).toLocaleDateString()}</div>
+                    <div>Last seen: {user.lastActive}</div>
+                  </div>
+                  <div style={{
+                    display: 'flex',
+                    gap: 'var(--spacing-2)'
+                  }}>
+                    <Button variant="ghost" style={{ fontSize: 'var(--text-sm)', padding: 'var(--spacing-2) var(--spacing-3)' }}>
+                      👁️ View Profile
+                    </Button>
+                    <Button variant="secondary" style={{ fontSize: 'var(--text-sm)', padding: 'var(--spacing-2) var(--spacing-3)' }}>
+                      ✏️ Edit User
+                    </Button>
+                  </div>
                 </div>
               </div>
-            </div>
-          ))
+            );
+          })
         )}
       </div>
 

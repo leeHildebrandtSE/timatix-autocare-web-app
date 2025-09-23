@@ -2929,3 +2929,555 @@ textarea:focus,
         font-weight: var(--font-weight-bold);
     }
 }
+
+/* ===== ENHANCED AVATAR ANIMATIONS AND STYLES ===== */
+
+/* Vehicle Avatar Animations */
+@keyframes vehicleFloat {
+    0%, 100% { 
+        transform: translateY(0px) rotate(0deg);
+    }
+    33% { 
+        transform: translateY(-3px) rotate(1deg);
+    }
+    66% { 
+        transform: translateY(3px) rotate(-1deg);
+    }
+}
+
+@keyframes statusPulse {
+    0%, 100% { 
+        transform: scale(1);
+        box-shadow: 0 2px 8px rgba(0, 0, 0, 0.2);
+    }
+    50% { 
+        transform: scale(1.1);
+        box-shadow: 0 4px 16px rgba(16, 185, 129, 0.6);
+    }
+}
+
+/* User Avatar Animations */
+@keyframes userOnlinePulse {
+    0%, 100% { 
+        transform: scale(1);
+        box-shadow: 0 2px 8px rgba(0, 0, 0, 0.2), 0 0 0 0 rgba(16, 185, 129, 0.7);
+    }
+    50% { 
+        transform: scale(1.1);
+        box-shadow: 0 4px 16px rgba(16, 185, 129, 0.4), 0 0 0 6px rgba(16, 185, 129, 0.2);
+    }
+}
+
+@keyframes avatarShimmer {
+    0% { 
+        background-position: -200% center;
+    }
+    100% { 
+        background-position: 200% center;
+    }
+}
+
+/* Enhanced Vehicle Avatar Styles */
+.vehicle-avatar-large {
+    position: relative;
+    background-size: 200% 100%;
+    background-image: linear-gradient(
+        90deg,
+        transparent 0%,
+        rgba(255, 255, 255, 0.1) 50%,
+        transparent 100%
+    );
+    animation: avatarShimmer 3s ease-in-out infinite;
+}
+
+.vehicle-avatar-large::before {
+    content: '';
+    position: absolute;
+    top: -2px;
+    left: -2px;
+    right: -2px;
+    bottom: -2px;
+    background: linear-gradient(45deg, transparent, rgba(255, 255, 255, 0.1), transparent);
+    border-radius: var(--border-radius-2xl);
+    animation: avatarRotate 8s linear infinite;
+    z-index: -1;
+}
+
+@keyframes avatarRotate {
+    0% { transform: rotate(0deg); }
+    100% { transform: rotate(360deg); }
+}
+
+.vehicle-avatar-mini {
+    position: relative;
+    overflow: hidden;
+}
+
+.vehicle-avatar-mini:hover {
+    transform: translateY(-2px) scale(1.05);
+    box-shadow: 0 8px 25px rgba(0, 0, 0, 0.15) !important;
+}
+
+.vehicle-avatar-mini::after {
+    content: '';
+    position: absolute;
+    top: -50%;
+    left: -50%;
+    width: 200%;
+    height: 200%;
+    background: linear-gradient(
+        45deg,
+        transparent 30%,
+        rgba(255, 255, 255, 0.1) 50%,
+        transparent 70%
+    );
+    transform: rotate(45deg);
+    transition: all 0.6s ease;
+    opacity: 0;
+}
+
+.vehicle-avatar-mini:hover::after {
+    animation: avatarSweep 0.6s ease;
+}
+
+@keyframes avatarSweep {
+    0% {
+        transform: translateX(-100%) translateY(-100%) rotate(45deg);
+        opacity: 1;
+    }
+    100% {
+        transform: translateX(100%) translateY(100%) rotate(45deg);
+        opacity: 0;
+    }
+}
+
+/* Enhanced User Profile Photo Styles */
+.user-profile-photo {
+    position: relative;
+    background-size: 200% 100%;
+    background-image: linear-gradient(
+        90deg,
+        transparent 0%,
+        rgba(255, 255, 255, 0.1) 50%,
+        transparent 100%
+    );
+}
+
+.user-profile-photo:hover {
+    animation: userProfileGlow 0.3s ease forwards;
+}
+
+@keyframes userProfileGlow {
+    0% { 
+        box-shadow: var(--shadow-lg);
+    }
+    100% { 
+        box-shadow: 0 12px 40px rgba(0, 0, 0, 0.2), 0 0 20px rgba(99, 102, 241, 0.3);
+    }
+}
+
+/* Role-based Avatar Styles */
+.user-profile-photo.role-ops-manager,
+.user-profile-photo.role-admin {
+    background: linear-gradient(135deg, #dc2626, #991b1b, #7f1d1d);
+}
+
+.user-profile-photo.role-mechanic {
+    background: linear-gradient(135deg, #2563eb, #1d4ed8, #1e40af);
+}
+
+.user-profile-photo.role-client {
+    background: linear-gradient(135deg, #059669, #047857, #065f46);
+}
+
+.user-profile-photo.role-cleaner {
+    background: linear-gradient(135deg, #7c3aed, #6d28d9, #5b21b6);
+}
+
+/* Avatar Loading States */
+.avatar-loading {
+    background: linear-gradient(
+        90deg,
+        var(--bg-muted) 25%,
+        var(--bg-hover) 50%,
+        var(--bg-muted) 75%
+    );
+    background-size: 200% 100%;
+    animation: avatarLoading 1.5s infinite;
+}
+
+@keyframes avatarLoading {
+    0% { background-position: 200% 0; }
+    100% { background-position: -200% 0; }
+}
+
+/* Enhanced Avatar Hover Effects */
+.vehicle-avatar-large:hover {
+    transform: scale(1.05);
+    box-shadow: 0 12px 48px rgba(0, 0, 0, 0.4), 0 6px 24px rgba(255, 255, 255, 0.1) inset;
+    animation: vehicleFloat 2s ease-in-out infinite, avatarPulse 1s ease-in-out infinite;
+}
+
+@keyframes avatarPulse {
+    0%, 100% { 
+        filter: brightness(1) saturate(1);
+    }
+    50% { 
+        filter: brightness(1.1) saturate(1.2);
+    }
+}
+
+/* Avatar Size Variations */
+.vehicle-avatar-small {
+    width: 40px;
+    height: 40px;
+    border-radius: var(--border-radius-lg);
+    font-size: 1.5rem;
+}
+
+.vehicle-avatar-medium {
+    width: 80px;
+    height: 80px;
+    border-radius: var(--border-radius-xl);
+    font-size: 2.5rem;
+}
+
+.user-avatar-small {
+    width: 40px;
+    height: 40px;
+    border-radius: var(--border-radius-full);
+    font-size: 1rem;
+}
+
+.user-avatar-medium {
+    width: 60px;
+    height: 60px;
+    border-radius: var(--border-radius-full);
+    font-size: 1.5rem;
+}
+
+.user-avatar-large {
+    width: 100px;
+    height: 100px;
+    border-radius: var(--border-radius-full);
+    font-size: 3rem;
+}
+
+/* Avatar Status Indicators */
+.avatar-status-online {
+    position: absolute;
+    bottom: 4px;
+    right: 4px;
+    width: 16px;
+    height: 16px;
+    background: var(--success-color);
+    border-radius: var(--border-radius-full);
+    border: 3px solid var(--bg-surface);
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.2);
+    animation: userOnlinePulse 2s ease-in-out infinite;
+}
+
+.avatar-status-offline {
+    position: absolute;
+    bottom: 4px;
+    right: 4px;
+    width: 16px;
+    height: 16px;
+    background: var(--text-muted);
+    border-radius: var(--border-radius-full);
+    border: 3px solid var(--bg-surface);
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.2);
+}
+
+.avatar-status-busy {
+    position: absolute;
+    bottom: 4px;
+    right: 4px;
+    width: 16px;
+    height: 16px;
+    background: var(--warning-color);
+    border-radius: var(--border-radius-full);
+    border: 3px solid var(--bg-surface);
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.2);
+}
+
+.avatar-status-away {
+    position: absolute;
+    bottom: 4px;
+    right: 4px;
+    width: 16px;
+    height: 16px;
+    background: var(--error-color);
+    border-radius: var(--border-radius-full);
+    border: 3px solid var(--bg-surface);
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.2);
+}
+
+/* Avatar Group Layouts */
+.avatar-group {
+    display: flex;
+    align-items: center;
+    gap: var(--spacing-2);
+}
+
+.avatar-stack {
+    display: flex;
+    align-items: center;
+}
+
+.avatar-stack .user-avatar,
+.avatar-stack .vehicle-avatar {
+    margin-left: -12px;
+    border: 3px solid var(--bg-surface);
+    transition: all var(--transition-base);
+    position: relative;
+    z-index: 1;
+}
+
+.avatar-stack .user-avatar:first-child,
+.avatar-stack .vehicle-avatar:first-child {
+    margin-left: 0;
+    z-index: 10;
+}
+
+.avatar-stack .user-avatar:hover,
+.avatar-stack .vehicle-avatar:hover {
+    transform: translateY(-4px) scale(1.1);
+    z-index: 20;
+    box-shadow: 0 8px 25px rgba(0, 0, 0, 0.2);
+}
+
+/* Avatar Placeholder States */
+.avatar-placeholder {
+    background: var(--bg-muted);
+    color: var(--text-muted);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-weight: var(--font-weight-semibold);
+    position: relative;
+    overflow: hidden;
+}
+
+.avatar-placeholder::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: -100%;
+    width: 100%;
+    height: 100%;
+    background: linear-gradient(
+        90deg,
+        transparent,
+        rgba(255, 255, 255, 0.2),
+        transparent
+    );
+    animation: avatarShimmer 2s infinite;
+}
+
+/* Responsive Avatar Sizes */
+@media (max-width: 768px) {
+    .vehicle-avatar-large {
+        width: 80px;
+        height: 80px;
+        font-size: 2.5rem;
+    }
+    
+    .user-profile-photo {
+        width: 60px;
+        height: 60px;
+        font-size: 1.8rem;
+    }
+    
+    .avatar-status-online,
+    .avatar-status-offline,
+    .avatar-status-busy,
+    .avatar-status-away {
+        width: 12px;
+        height: 12px;
+        border-width: 2px;
+    }
+}
+
+@media (max-width: 480px) {
+    .vehicle-avatar-large {
+        width: 60px;
+        height: 60px;
+        font-size: 2rem;
+    }
+    
+    .user-profile-photo {
+        width: 50px;
+        height: 50px;
+        font-size: 1.5rem;
+    }
+    
+    .vehicle-avatar-mini {
+        width: 45px;
+        height: 45px;
+        font-size: 1.5rem;
+    }
+}
+
+/* Dark Mode Avatar Enhancements */
+[data-theme="dark"] .vehicle-avatar-large,
+[data-theme="dark"] .vehicle-avatar-mini,
+[data-theme="dark"] .user-profile-photo {
+    box-shadow: 
+        0 4px 20px rgba(0, 0, 0, 0.4),
+        0 2px 10px rgba(99, 102, 241, 0.2),
+        0 1px 4px rgba(255, 255, 255, 0.1) inset;
+}
+
+[data-theme="dark"] .vehicle-avatar-large:hover,
+[data-theme="dark"] .user-profile-photo:hover {
+    box-shadow: 
+        0 8px 40px rgba(0, 0, 0, 0.6),
+        0 4px 20px rgba(99, 102, 241, 0.4),
+        0 2px 8px rgba(255, 255, 255, 0.1) inset;
+}
+
+[data-theme="dark"] .avatar-status-online {
+    box-shadow: 
+        0 2px 8px rgba(0, 0, 0, 0.4),
+        0 0 12px rgba(16, 185, 129, 0.6);
+}
+
+/* Avatar Interaction States */
+.avatar-clickable {
+    cursor: pointer;
+    transition: all var(--transition-base);
+}
+
+.avatar-clickable:hover {
+    transform: scale(1.05);
+}
+
+.avatar-clickable:active {
+    transform: scale(0.95);
+}
+
+.avatar-selected {
+    box-shadow: 0 0 0 3px var(--primary-color);
+    transform: scale(1.05);
+}
+
+/* Avatar Notification Badges */
+.avatar-badge {
+    position: absolute;
+    top: -4px;
+    right: -4px;
+    min-width: 20px;
+    height: 20px;
+    background: var(--error-color);
+    color: white;
+    border-radius: var(--border-radius-full);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: var(--text-xs);
+    font-weight: var(--font-weight-bold);
+    border: 2px solid var(--bg-surface);
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.2);
+    animation: badgeBounce 0.3s ease;
+}
+
+@keyframes badgeBounce {
+    0% { transform: scale(0); }
+    50% { transform: scale(1.2); }
+    100% { transform: scale(1); }
+}
+
+.avatar-badge.badge-success {
+    background: var(--success-color);
+}
+
+.avatar-badge.badge-warning {
+    background: var(--warning-color);
+}
+
+.avatar-badge.badge-info {
+    background: var(--info-color);
+}
+
+/* Avatar Tooltip Integration */
+.avatar-tooltip {
+    position: relative;
+}
+
+.avatar-tooltip::after {
+    content: attr(data-tooltip);
+    position: absolute;
+    bottom: 120%;
+    left: 50%;
+    transform: translateX(-50%);
+    background: rgba(0, 0, 0, 0.9);
+    color: white;
+    padding: var(--spacing-2) var(--spacing-3);
+    border-radius: var(--border-radius-md);
+    font-size: var(--text-xs);
+    white-space: nowrap;
+    opacity: 0;
+    pointer-events: none;
+    transition: opacity var(--transition-base);
+    z-index: 1000;
+}
+
+.avatar-tooltip:hover::after {
+    opacity: 1;
+}
+
+/* Avatar Grid Layouts */
+.avatar-grid {
+    display: grid;
+    gap: var(--spacing-4);
+    grid-template-columns: repeat(auto-fill, minmax(80px, 1fr));
+}
+
+.avatar-grid-small {
+    grid-template-columns: repeat(auto-fill, minmax(50px, 1fr));
+    gap: var(--spacing-2);
+}
+
+.avatar-grid-large {
+    grid-template-columns: repeat(auto-fill, minmax(120px, 1fr));
+    gap: var(--spacing-6);
+}
+
+/* Accessibility Enhancements */
+.avatar-clickable:focus {
+    outline: 2px solid var(--primary-color);
+    outline-offset: 2px;
+}
+
+@media (prefers-reduced-motion: reduce) {
+    .vehicle-avatar-large,
+    .vehicle-avatar-mini,
+    .user-profile-photo,
+    .avatar-status-online,
+    .avatar-badge {
+        animation: none !important;
+    }
+    
+    .avatar-clickable:hover,
+    .vehicle-avatar-large:hover,
+    .user-profile-photo:hover {
+        transform: none;
+    }
+}
+
+/* High Contrast Mode */
+@media (prefers-contrast: high) {
+    .vehicle-avatar-large,
+    .vehicle-avatar-mini,
+    .user-profile-photo {
+        border: 3px solid currentColor;
+    }
+    
+    .avatar-status-online,
+    .avatar-status-offline,
+    .avatar-status-busy,
+    .avatar-status-away {
+        border-width: 3px;
+    }
+}

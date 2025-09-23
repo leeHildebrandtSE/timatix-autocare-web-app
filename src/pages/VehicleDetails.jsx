@@ -15,6 +15,35 @@ export default function VehicleDetails() {
   const { showToast } = useToast();
   const navigate = useNavigate();
 
+  // Helper function to get vehicle avatar/photo
+  const getVehicleAvatar = (vehicle) => {
+    const vehiclePhotos = {
+      'Honda Civic 2019': '🚗',
+      'Toyota RAV4 2021': '🚙', 
+      'Ford F-150 2020': '🛻',
+      'BMW X3 2022': '🚗',
+      'Mazda CX-5 2021': '🚙'
+    };
+    
+    // You can replace these with actual image URLs later
+    const makeModel = vehicle?.makeModel || '';
+    return vehiclePhotos[makeModel] || '🚗';
+  };
+
+  // Helper function to get vehicle color theme based on make
+  const getVehicleColorTheme = (vehicle) => {
+    const makeModel = vehicle?.makeModel || '';
+    
+    if (makeModel.includes('Honda')) return { primary: '#e60012', secondary: '#b8001a' };
+    if (makeModel.includes('Toyota')) return { primary: '#eb0a1e', secondary: '#c4081a' };
+    if (makeModel.includes('Ford')) return { primary: '#003478', secondary: '#002a63' };
+    if (makeModel.includes('BMW')) return { primary: '#1c69d4', secondary: '#1557b8' };
+    if (makeModel.includes('Mazda')) return { primary: '#cc0633', secondary: '#a8052b' };
+    
+    // Default theme
+    return { primary: 'var(--primary-color)', secondary: 'var(--secondary-color)' };
+  };
+
   const handleSchedule = () => {
     setScheduling(true);
     showToast({ type: "info", message: "Navigating to booking..." });
@@ -88,22 +117,77 @@ export default function VehicleDetails() {
     );
   }
 
+  const vehicleTheme = getVehicleColorTheme(vehicle);
+
   return (
     <div className="screen-content">
-      {/* Enhanced Header */}
+      {/* Enhanced Header with Vehicle Avatar */}
       <div className="screen-header vehicle-header client-header">
         <div className="header-content">
-          <div>
-            <div className="header-title">
-              <span className="header-emoji">🚗</span>
-              <h1>{vehicle.makeModel}</h1>
+          <div style={{ display: 'flex', alignItems: 'flex-start', gap: 'var(--spacing-6)' }}>
+            {/* Vehicle Avatar/Photo */}
+            <div className="vehicle-avatar-large" style={{
+              position: 'relative',
+              width: '120px',
+              height: '120px',
+              borderRadius: 'var(--border-radius-2xl)',
+              background: `linear-gradient(135deg, ${vehicleTheme.primary}, ${vehicleTheme.secondary})`,
+              display: 'flex',
+              alignItems: 'center',
+              justifyContent: 'center',
+              fontSize: '4rem',
+              boxShadow: '0 8px 32px rgba(0, 0, 0, 0.3), 0 4px 16px rgba(255, 255, 255, 0.1) inset',
+              border: '3px solid rgba(255, 255, 255, 0.2)',
+              flexShrink: 0,
+              transition: 'all var(--transition-base)',
+              overflow: 'hidden'
+            }}>
+              {/* You can replace this with <img> tag when you have real photos */}
+              <span style={{ 
+                textShadow: '0 2px 8px rgba(0, 0, 0, 0.3)',
+                animation: 'vehicleFloat 3s ease-in-out infinite' 
+              }}>
+                {getVehicleAvatar(vehicle)}
+              </span>
+              
+              {/* Status indicator */}
+              <div style={{
+                position: 'absolute',
+                top: '8px',
+                right: '8px',
+                width: '20px',
+                height: '20px',
+                background: 'var(--success-color)',
+                borderRadius: 'var(--border-radius-full)',
+                border: '3px solid rgba(255, 255, 255, 0.9)',
+                boxShadow: '0 2px 8px rgba(0, 0, 0, 0.2)',
+                animation: 'statusPulse 2s ease-in-out infinite'
+              }} />
+
+              {/* Reflection overlay */}
+              <div style={{
+                position: 'absolute',
+                top: 0,
+                left: 0,
+                right: 0,
+                bottom: 0,
+                background: 'linear-gradient(135deg, rgba(255,255,255,0.3) 0%, transparent 50%, rgba(0,0,0,0.1) 100%)',
+                borderRadius: 'var(--border-radius-2xl)'
+              }} />
             </div>
-            <p className="header-subtitle">
-              License: <strong>{vehicle.license}</strong> • VIN: <strong>{vehicle.vin}</strong>
-            </p>
-            <div className="status-badge">
-              <div className="status-dot" />
-              <span>Active • Last service: {vehicle.lastServiceDays} days ago</span>
+
+            <div>
+              <div className="header-title">
+                <span className="header-emoji">🚗</span>
+                <h1>{vehicle.makeModel}</h1>
+              </div>
+              <p className="header-subtitle">
+                License: <strong>{vehicle.license}</strong> • VIN: <strong>{vehicle.vin}</strong>
+              </p>
+              <div className="status-badge">
+                <div className="status-dot" />
+                <span>Active • Last service: {vehicle.lastServiceDays} days ago</span>
+              </div>
             </div>
           </div>
 
@@ -143,7 +227,7 @@ export default function VehicleDetails() {
           />
         </div>
 
-        {/* Enhanced Vehicle Selection */}
+        {/* Enhanced Vehicle Selection with Avatars */}
         <section className="mt-lg">
           <div style={{ 
             display: 'flex', 
@@ -172,52 +256,97 @@ export default function VehicleDetails() {
           </div>
           
           <div className="vehicle-list">
-            {list.map(v => (
-              <div 
-                key={v.id} 
-                className={`vehicle-mini ${v.id === vehicle.id ? 'selected' : ''}`}
-                onClick={() => handleVehicleSelect(v)}
-                style={{ position: 'relative' }}
-              >
-                {v.id === vehicle.id && (
+            {list.map(v => {
+              const vTheme = getVehicleColorTheme(v);
+              return (
+                <div 
+                  key={v.id} 
+                  className={`vehicle-mini ${v.id === vehicle.id ? 'selected' : ''}`}
+                  onClick={() => handleVehicleSelect(v)}
+                  style={{ position: 'relative' }}
+                >
+                  {/* Vehicle Mini Avatar */}
+                  <div className="vehicle-avatar-mini" style={{
+                    width: '60px',
+                    height: '60px',
+                    borderRadius: 'var(--border-radius-xl)',
+                    background: `linear-gradient(135deg, ${vTheme.primary}, ${vTheme.secondary})`,
+                    display: 'flex',
+                    alignItems: 'center',
+                    justifyContent: 'center',
+                    fontSize: '2rem',
+                    margin: '0 auto var(--spacing-3)',
+                    boxShadow: v.id === vehicle.id 
+                      ? '0 4px 20px rgba(99, 102, 241, 0.4), 0 2px 10px rgba(0, 0, 0, 0.1)' 
+                      : 'var(--shadow-md)',
+                    border: v.id === vehicle.id 
+                      ? '2px solid var(--primary-color)' 
+                      : '2px solid rgba(255, 255, 255, 0.1)',
+                    transition: 'all var(--transition-base)',
+                    position: 'relative',
+                    overflow: 'hidden'
+                  }}>
+                    <span style={{ textShadow: '0 1px 4px rgba(0, 0, 0, 0.3)' }}>
+                      {getVehicleAvatar(v)}
+                    </span>
+                    
+                    {/* Selected indicator */}
+                    {v.id === vehicle.id && (
+                      <div style={{
+                        position: 'absolute',
+                        top: '4px',
+                        right: '4px',
+                        width: '12px',
+                        height: '12px',
+                        background: 'var(--success-color)',
+                        borderRadius: '50%',
+                        border: '2px solid white',
+                        boxShadow: '0 1px 3px rgba(0, 0, 0, 0.3)'
+                      }} />
+                    )}
+
+                    {/* Mini reflection */}
+                    <div style={{
+                      position: 'absolute',
+                      top: 0,
+                      left: 0,
+                      right: 0,
+                      bottom: 0,
+                      background: 'linear-gradient(135deg, rgba(255,255,255,0.2) 0%, transparent 60%)',
+                      borderRadius: 'var(--border-radius-xl)'
+                    }} />
+                  </div>
+
+                  <div style={{ 
+                    fontWeight: 'var(--font-weight-semibold)',
+                    fontSize: 'var(--text-base)',
+                    marginBottom: 'var(--spacing-1)',
+                    color: v.id === vehicle.id ? 'var(--primary-color)' : 'var(--text-primary)',
+                    textAlign: 'center'
+                  }}>
+                    {v.makeModel}
+                  </div>
+                  <div style={{ 
+                    fontSize: 'var(--text-sm)', 
+                    color: 'var(--text-secondary)',
+                    fontWeight: 'var(--font-weight-medium)',
+                    textAlign: 'center',
+                    marginBottom: 'var(--spacing-2)'
+                  }}>
+                    {v.license}
+                  </div>
                   <div style={{
-                    position: 'absolute',
-                    top: 'var(--spacing-2)',
-                    right: 'var(--spacing-2)',
-                    width: '8px',
-                    height: '8px',
-                    background: 'var(--success-color)',
-                    borderRadius: '50%',
-                    border: '2px solid var(--bg-surface)'
-                  }} />
-                )}
-                <div style={{ 
-                  fontWeight: 'var(--font-weight-semibold)',
-                  fontSize: 'var(--text-base)',
-                  marginBottom: 'var(--spacing-1)',
-                  color: v.id === vehicle.id ? 'var(--primary-color)' : 'var(--text-primary)'
-                }}>
-                  {v.makeModel}
+                    fontSize: 'var(--text-xs)',
+                    color: 'var(--text-muted)',
+                    display: 'flex',
+                    justifyContent: 'space-between'
+                  }}>
+                    <span>{v.miles.toLocaleString()} mi</span>
+                    <span>{v.services} services</span>
+                  </div>
                 </div>
-                <div style={{ 
-                  fontSize: 'var(--text-sm)', 
-                  color: 'var(--text-secondary)',
-                  fontWeight: 'var(--font-weight-medium)'
-                }}>
-                  {v.license}
-                </div>
-                <div style={{
-                  marginTop: 'var(--spacing-2)',
-                  fontSize: 'var(--text-xs)',
-                  color: 'var(--text-muted)',
-                  display: 'flex',
-                  justifyContent: 'space-between'
-                }}>
-                  <span>{v.miles.toLocaleString()} mi</span>
-                  <span>{v.services} services</span>
-                </div>
-              </div>
-            ))}
+              );
+            })}
           </div>
 
           {/* Quick Actions */}
