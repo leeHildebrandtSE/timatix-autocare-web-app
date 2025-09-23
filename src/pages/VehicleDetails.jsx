@@ -51,14 +51,16 @@ export default function VehicleDetails() {
 
   if (!vehicle) {
     return (
-      <div style={{ minHeight: 300, display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
-        <div>Loading vehicle...</div>
+      <div className="screen-content">
+        <div className="card text-center" style={{ padding: '40px' }}>
+          <h3>Loading vehicle...</h3>
+        </div>
       </div>
     );
   }
 
   return (
-    <div className="screen-content active" id="vehicle-details">
+    <div className="screen-content">
       <div className="screen-header vehicle-header client-header">
         <div className="header-content">
           <div>
@@ -74,10 +76,10 @@ export default function VehicleDetails() {
           </div>
 
           <div className="vehicle-actions">
-            <Button variant="primary" onClick={handleSchedule} isLoading={scheduling} type="button">
+            <Button variant="primary" onClick={handleSchedule} isLoading={scheduling}>
               Schedule Service
             </Button>
-            <Button variant="secondary" onClick={handleViewHistory} isLoading={viewingHistory} type="button">
+            <Button variant="secondary" onClick={handleViewHistory} isLoading={viewingHistory}>
               View History
             </Button>
           </div>
@@ -85,31 +87,24 @@ export default function VehicleDetails() {
       </div>
 
       <div className="vehicle-overview">
-        <div className="vehicle-stats-grid" style={{ display: "flex", gap: 16, flexWrap: "wrap" }}>
+        <div className="vehicle-stats-grid">
           <StatCard icon="📊" value={`${vehicle.miles.toLocaleString()}`} label="Total Miles" />
           <StatCard icon="⛽" value={`${vehicle.mpg}`} label="MPG Average" />
           <StatCard icon="🔧" value={vehicle.services} label="Services" />
           <StatCard icon="💰" value={vehicle.totalSpent} label="Total Spent" />
         </div>
 
-        <section style={{ marginTop: 20 }}>
-          <h3>Your vehicles</h3>
-          <div className="vehicle-list" style={{ display: "flex", gap: 12, flexWrap: "wrap" }}>
+        <section className="mt-lg">
+          <h3 className="mb-md">Your vehicles</h3>
+          <div className="vehicle-list">
             {list.map(v => (
               <div 
                 key={v.id} 
-                className="vehicle-mini" 
-                onClick={() => setVehicle(v)} 
-                style={{ 
-                  cursor: "pointer", 
-                  padding: 10, 
-                  border: v.id === vehicle.id ? "2px solid #667eea" : "1px solid #e5e7eb", 
-                  borderRadius: 8,
-                  backgroundColor: "var(--bg-surface)"
-                }}
+                className={`vehicle-mini ${v.id === vehicle.id ? 'selected' : ''}`}
+                onClick={() => setVehicle(v)}
               >
                 <div style={{ fontWeight: 600 }}>{v.makeModel}</div>
-                <div style={{ fontSize: 12 }}>{v.license}</div>
+                <div style={{ fontSize: 12, color: 'var(--text-secondary)' }}>{v.license}</div>
               </div>
             ))}
           </div>
