@@ -39,6 +39,8 @@ export default function VehicleDetails() {
         showToast({ type: "error", message: "Failed to load vehicles" });
       } finally {
         hideLoading();
+        setScheduling(false);
+        setViewingHistory(false);
       }
     })();
 
@@ -47,7 +49,13 @@ export default function VehicleDetails() {
     };
   }, [showLoading, hideLoading, showToast]);
 
-  if (!vehicle) return <div style={{ minHeight: 300, display: 'flex', alignItems: 'center', justifyContent: 'center' }}><LoadingSpinner message="Loading vehicle..." /></div>;
+  if (!vehicle) {
+    return (
+      <div style={{ minHeight: 300, display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
+        <div>Loading vehicle...</div>
+      </div>
+    );
+  }
 
   return (
     <div className="screen-content active" id="vehicle-details">
@@ -66,14 +74,18 @@ export default function VehicleDetails() {
           </div>
 
           <div className="vehicle-actions">
-            <Button variant="primary" onClick={handleSchedule} isLoading={scheduling} type="button">Schedule Service</Button>
-            <Button variant="secondary" onClick={handleViewHistory} isLoading={viewingHistory} type="button">View History</Button>
+            <Button variant="primary" onClick={handleSchedule} isLoading={scheduling} type="button">
+              Schedule Service
+            </Button>
+            <Button variant="secondary" onClick={handleViewHistory} isLoading={viewingHistory} type="button">
+              View History
+            </Button>
           </div>
         </div>
       </div>
 
       <div className="vehicle-overview">
-        <div className="vehicle-stats-grid" style={{ display: "flex", gap: 16 }}>
+        <div className="vehicle-stats-grid" style={{ display: "flex", gap: 16, flexWrap: "wrap" }}>
           <StatCard icon="📊" value={`${vehicle.miles.toLocaleString()}`} label="Total Miles" />
           <StatCard icon="⛽" value={`${vehicle.mpg}`} label="MPG Average" />
           <StatCard icon="🔧" value={vehicle.services} label="Services" />
@@ -82,9 +94,20 @@ export default function VehicleDetails() {
 
         <section style={{ marginTop: 20 }}>
           <h3>Your vehicles</h3>
-          <div className="vehicle-list" style={{ display: "flex", gap: 12 }}>
+          <div className="vehicle-list" style={{ display: "flex", gap: 12, flexWrap: "wrap" }}>
             {list.map(v => (
-              <div key={v.id} className="vehicle-mini" onClick={() => setVehicle(v)} style={{ cursor: "pointer", padding: 10, border: v.id === vehicle.id ? "2px solid #2b6cb0" : "1px solid #ddd", borderRadius: 8 }}>
+              <div 
+                key={v.id} 
+                className="vehicle-mini" 
+                onClick={() => setVehicle(v)} 
+                style={{ 
+                  cursor: "pointer", 
+                  padding: 10, 
+                  border: v.id === vehicle.id ? "2px solid #667eea" : "1px solid #e5e7eb", 
+                  borderRadius: 8,
+                  backgroundColor: "var(--bg-surface)"
+                }}
+              >
                 <div style={{ fontWeight: 600 }}>{v.makeModel}</div>
                 <div style={{ fontSize: 12 }}>{v.license}</div>
               </div>

@@ -17,8 +17,23 @@ export default function NavBar() {
     <header className="navbar">
       <div className="nav-container">
         <div className="nav-brand">
-          <img src="/images/logo_only.png" className="logo" alt="logo" />
-          <img src="/images/title_only_cropped.png" className="logo_title" alt="title" />
+          <div className="logo" style={{
+            width: '60px',
+            height: '60px',
+            background: 'linear-gradient(135deg, #667eea, #764ba2)',
+            borderRadius: '12px',
+            display: 'flex',
+            alignItems: 'center',
+            justifyContent: 'center',
+            color: 'white',
+            fontSize: '24px',
+            fontWeight: 'bold'
+          }}>
+            T
+          </div>
+          <div className="brand-text" style={{ fontSize: '20px', fontWeight: '700', color: '#667eea' }}>
+            Timatix
+          </div>
         </div>
 
         <div className="nav-menu">
