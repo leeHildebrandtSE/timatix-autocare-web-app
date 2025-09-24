@@ -1,8 +1,8 @@
 import React, { useEffect, useState } from "react";
-import { listBookings, listVehicles } from "../api/mockApi";
-import { useLoading } from "../hooks/useLoading";
-import { useToast } from "../hooks/useToast";
-import Button from "../components/ui/Button";
+import { listBookings, listVehicles } from "../../api/mockApi";
+import { useLoading } from "../../hooks/useLoading";
+import { useToast } from "../../hooks/useToast";
+import Button from "../../components/ui/Button";
 
 export default function ServiceHistory() {
   const [history, setHistory] = useState([]);

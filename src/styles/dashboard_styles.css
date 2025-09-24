@@ -3481,3 +3481,670 @@ textarea:focus,
         border-width: 3px;
     }
 }
+
+/* ===== DASHBOARD HEADER GRADIENTS ===== */
+
+/* Client Dashboard Header */
+.client-dashboard-header {
+  background: linear-gradient(135deg, #3b82f6, #1d4ed8, #1e40af);
+  position: relative;
+  overflow: hidden;
+}
+
+.client-dashboard-header::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: linear-gradient(45deg, transparent, rgba(255, 255, 255, 0.1), transparent);
+  animation: shimmer 3s ease-in-out infinite;
+}
+
+/* Mechanic Dashboard Header */
+.mechanic-dashboard-header {
+  background: linear-gradient(135deg, #f59e0b, #d97706, #b45309);
+  position: relative;
+  overflow: hidden;
+}
+
+.mechanic-dashboard-header::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: linear-gradient(45deg, transparent, rgba(255, 255, 255, 0.1), transparent);
+  animation: shimmer 3s ease-in-out infinite;
+}
+
+/* Active Jobs Header */
+.mechanic-active-jobs-header {
+  background: linear-gradient(135deg, #ea580c, #dc2626, #b91c1c);
+  position: relative;
+  overflow: hidden;
+}
+
+.mechanic-active-jobs-header::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: linear-gradient(45deg, transparent, rgba(255, 255, 255, 0.1), transparent);
+  animation: shimmer 3s ease-in-out infinite;
+}
+
+/* Job Details Header */
+.mechanic-job-details-header {
+  background: linear-gradient(135deg, #f97316, #ea580c, #dc2626);
+  position: relative;
+  overflow: hidden;
+}
+
+.mechanic-job-details-header::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: linear-gradient(45deg, transparent, rgba(255, 255, 255, 0.1), transparent);
+  animation: shimmer 3s ease-in-out infinite;
+}
+
+/* Time Tracking Header */
+.mechanic-time-tracking-header {
+  background: linear-gradient(135deg, #059669, #047857, #065f46);
+  position: relative;
+  overflow: hidden;
+}
+
+.mechanic-time-tracking-header::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: linear-gradient(45deg, transparent, rgba(255, 255, 255, 0.1), transparent);
+  animation: shimmer 3s ease-in-out infinite;
+}
+
+/* Admin Dashboard Header */
+.admin-dashboard-header {
+  background: linear-gradient(135deg, #8b5cf6, #7c3aed, #6d28d9);
+  position: relative;
+  overflow: hidden;
+}
+
+.admin-dashboard-header::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: linear-gradient(45deg, transparent, rgba(255, 255, 255, 0.1), transparent);
+  animation: shimmer 3s ease-in-out infinite;
+}
+
+/* Reports Header */
+.admin-reports-header {
+  background: linear-gradient(135deg, #6366f1, #4f46e5, #4338ca);
+  position: relative;
+  overflow: hidden;
+}
+
+.admin-reports-header::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: linear-gradient(45deg, transparent, rgba(255, 255, 255, 0.1), transparent);
+  animation: shimmer 3s ease-in-out infinite;
+}
+
+/* Settings Header */
+.admin-settings-header {
+  background: linear-gradient(135deg, #e11d48, #be185d, #9d174d);
+  position: relative;
+  overflow: hidden;
+}
+
+.admin-settings-header::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: linear-gradient(45deg, transparent, rgba(255, 255, 255, 0.1), transparent);
+  animation: shimmer 3s ease-in-out infinite;
+}
+
+/* ===== PROGRESS BAR ENHANCEMENTS ===== */
+
+/* Animated Progress Bars */
+.progress-bar-animated {
+  background: linear-gradient(90deg, 
+    var(--primary-color) 0%, 
+    var(--primary-color) 40%, 
+    rgba(255, 255, 255, 0.3) 50%, 
+    var(--primary-color) 60%, 
+    var(--primary-color) 100%
+  );
+  background-size: 200% 100%;
+  animation: progressShimmer 2s ease-in-out infinite;
+}
+
+@keyframes progressShimmer {
+  0% { background-position: 200% 0; }
+  100% { background-position: -200% 0; }
+}
+
+/* Job Progress Bars */
+.job-progress-bar {
+  background: linear-gradient(90deg, 
+    #f59e0b 0%, 
+    #f59e0b 40%, 
+    rgba(255, 255, 255, 0.4) 50%, 
+    #f59e0b 60%, 
+    #f59e0b 100%
+  );
+  background-size: 200% 100%;
+  animation: progressShimmer 3s ease-in-out infinite;
+  box-shadow: 
+    0 2px 8px rgba(245, 158, 11, 0.3),
+    0 1px 4px rgba(245, 158, 11, 0.2) inset;
+}
+
+/* ===== TIMER ANIMATIONS ===== */
+
+/* Active Timer Pulse */
+.active-timer {
+  animation: timerPulse 2s ease-in-out infinite;
+}
+
+@keyframes timerPulse {
+  0%, 100% { 
+    transform: scale(1);
+    box-shadow: 0 4px 20px rgba(59, 130, 246, 0.3);
+  }
+  50% { 
+    transform: scale(1.02);
+    box-shadow: 0 8px 40px rgba(59, 130, 246, 0.5);
+  }
+}
+
+/* Timer Display */
+.timer-display {
+  font-family: 'Courier New', monospace;
+  font-weight: bold;
+  letter-spacing: 0.1em;
+  text-shadow: 0 2px 8px rgba(0, 0, 0, 0.2);
+}
+
+/* ===== STAT CARD ENHANCEMENTS ===== */
+
+/* Stat Cards Hover Effects */
+.stat-card {
+  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+  position: relative;
+  overflow: hidden;
+}
+
+.stat-card::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: -100%;
+  width: 100%;
+  height: 100%;
+  background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.1), transparent);
+  transition: all 0.5s ease;
+}
+
+.stat-card:hover::before {
+  left: 100%;
+}
+
+.stat-card:hover {
+  transform: translateY(-4px) scale(1.02);
+  box-shadow: 0 12px 48px rgba(0, 0, 0, 0.15);
+}
+
+/* ===== TABLE ENHANCEMENTS ===== */
+
+/* Modern Table Styling */
+.modern-table {
+  border-collapse: separate;
+  border-spacing: 0;
+}
+
+.modern-table th {
+  background: linear-gradient(135deg, #f8fafc, #e2e8f0);
+  font-weight: 600;
+  text-transform: uppercase;
+  font-size: 0.75rem;
+  letter-spacing: 0.05em;
+  border-bottom: 2px solid var(--border-color);
+}
+
+.modern-table tbody tr {
+  transition: all 0.2s ease;
+  border-bottom: 1px solid var(--border-light);
+}
+
+.modern-table tbody tr:hover {
+  background: linear-gradient(90deg, 
+    rgba(var(--primary-rgb), 0.02), 
+    rgba(var(--primary-rgb), 0.05), 
+    rgba(var(--primary-rgb), 0.02)
+  );
+  transform: translateX(4px);
+}
+
+/* ===== FILTER AND SEARCH ENHANCEMENTS ===== */
+
+/* Search Input Styling */
+.search-input {
+  position: relative;
+  transition: all 0.3s ease;
+}
+
+.search-input:focus-within {
+  box-shadow: 0 4px 20px rgba(var(--primary-rgb), 0.2);
+  transform: translateY(-2px);
+}
+
+.search-input input {
+  padding-left: 3rem;
+  background: linear-gradient(135deg, 
+    rgba(255, 255, 255, 0.9), 
+    rgba(255, 255, 255, 1)
+  );
+}
+
+.search-input::before {
+  content: '🔍';
+  position: absolute;
+  left: 1rem;
+  top: 50%;
+  transform: translateY(-50%);
+  z-index: 10;
+  font-size: 1.2rem;
+}
+
+/* Filter Buttons */
+.filter-button {
+  transition: all 0.2s ease;
+  position: relative;
+  overflow: hidden;
+}
+
+.filter-button.active {
+  background: linear-gradient(135deg, var(--primary-color), var(--primary-dark));
+  color: white;
+  box-shadow: 0 4px 12px rgba(var(--primary-rgb), 0.3);
+}
+
+.filter-button:hover:not(.active) {
+  background: linear-gradient(135deg, var(--bg-hover), var(--bg-surface));
+  transform: translateY(-1px);
+}
+
+/* ===== STATUS INDICATOR ENHANCEMENTS ===== */
+
+/* Status Badges with Animation */
+.status-badge {
+  position: relative;
+  font-weight: 600;
+  text-transform: uppercase;
+  font-size: 0.75rem;
+  letter-spacing: 0.05em;
+  transition: all 0.2s ease;
+}
+
+.status-badge::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: linear-gradient(45deg, transparent, rgba(255, 255, 255, 0.2), transparent);
+  opacity: 0;
+  transition: all 0.3s ease;
+}
+
+.status-badge:hover::before {
+  opacity: 1;
+  animation: badgeShimmer 0.6s ease;
+}
+
+@keyframes badgeShimmer {
+  0% { transform: translateX(-100%); }
+  100% { transform: translateX(100%); }
+}
+
+/* Priority Badges */
+.priority-high {
+  background: linear-gradient(135deg, #dc2626, #b91c1c);
+  border-color: #f87171;
+  color: white;
+  box-shadow: 0 2px 8px rgba(220, 38, 38, 0.3);
+}
+
+.priority-medium {
+  background: linear-gradient(135deg, #f59e0b, #d97706);
+  border-color: #fbbf24;
+  color: white;
+  box-shadow: 0 2px 8px rgba(245, 158, 11, 0.3);
+}
+
+.priority-low {
+  background: linear-gradient(135deg, #059669, #047857);
+  border-color: #34d399;
+  color: white;
+  box-shadow: 0 2px 8px rgba(5, 150, 105, 0.3);
+}
+
+/* ===== FORM ENHANCEMENTS ===== */
+
+/* Modern Form Controls */
+.form-control {
+  transition: all 0.3s ease;
+  background: linear-gradient(135deg, 
+    rgba(255, 255, 255, 0.9), 
+    rgba(255, 255, 255, 1)
+  );
+  border: 2px solid var(--border-color);
+}
+
+.form-control:focus {
+  border-color: var(--primary-color);
+  box-shadow: 
+    0 0 0 3px rgba(var(--primary-rgb), 0.1),
+    0 4px 12px rgba(var(--primary-rgb), 0.15);
+  transform: translateY(-1px);
+}
+
+/* Toggle Switches */
+.toggle-switch {
+  appearance: none;
+  width: 3rem;
+  height: 1.5rem;
+  background: linear-gradient(135deg, #d1d5db, #9ca3af);
+  border-radius: 0.75rem;
+  position: relative;
+  cursor: pointer;
+  transition: all 0.3s ease;
+}
+
+.toggle-switch:checked {
+  background: linear-gradient(135deg, var(--primary-color), var(--primary-dark));
+}
+
+.toggle-switch::before {
+  content: '';
+  position: absolute;
+  top: 0.125rem;
+  left: 0.125rem;
+  width: 1.25rem;
+  height: 1.25rem;
+  background: white;
+  border-radius: 50%;
+  transition: all 0.3s ease;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
+}
+
+.toggle-switch:checked::before {
+  transform: translateX(1.5rem);
+}
+
+/* ===== LOADING STATES ===== */
+
+/* Loading Skeleton */
+.loading-skeleton {
+  background: linear-gradient(90deg, 
+    var(--bg-muted) 25%, 
+    var(--bg-hover) 50%, 
+    var(--bg-muted) 75%
+  );
+  background-size: 200% 100%;
+  animation: skeletonLoading 1.5s infinite;
+  border-radius: var(--border-radius-md);
+}
+
+@keyframes skeletonLoading {
+  0% { background-position: 200% 0; }
+  100% { background-position: -200% 0; }
+}
+
+/* Loading Spinner */
+.loading-spinner {
+  width: 2rem;
+  height: 2rem;
+  border: 3px solid var(--bg-muted);
+  border-top: 3px solid var(--primary-color);
+  border-radius: 50%;
+  animation: spin 1s linear infinite;
+}
+
+@keyframes spin {
+  0% { transform: rotate(0deg); }
+  100% { transform: rotate(360deg); }
+}
+
+/* ===== NOTIFICATION STYLES ===== */
+
+/* Toast Notifications */
+.toast-notification {
+  background: linear-gradient(135deg, 
+    rgba(255, 255, 255, 0.95), 
+    rgba(255, 255, 255, 1)
+  );
+  backdrop-filter: blur(10px);
+  border: 1px solid rgba(255, 255, 255, 0.2);
+  box-shadow: 0 8px 32px rgba(0, 0, 0, 0.1);
+  border-radius: var(--border-radius-xl);
+  animation: toastSlideIn 0.3s ease;
+}
+
+@keyframes toastSlideIn {
+  0% { 
+    transform: translateX(100%); 
+    opacity: 0; 
+  }
+  100% { 
+    transform: translateX(0); 
+    opacity: 1; 
+  }
+}
+
+.toast-success {
+  border-left: 4px solid var(--success-color);
+}
+
+.toast-error {
+  border-left: 4px solid var(--error-color);
+}
+
+.toast-warning {
+  border-left: 4px solid var(--warning-color);
+}
+
+.toast-info {
+  border-left: 4px solid var(--info-color);
+}
+
+/* ===== DARK MODE ENHANCEMENTS ===== */
+
+/* Dark Mode Dashboard Headers */
+[data-theme="dark"] .client-dashboard-header,
+[data-theme="dark"] .mechanic-dashboard-header,
+[data-theme="dark"] .admin-dashboard-header,
+[data-theme="dark"] .admin-reports-header,
+[data-theme="dark"] .admin-settings-header,
+[data-theme="dark"] .mechanic-active-jobs-header,
+[data-theme="dark"] .mechanic-job-details-header,
+[data-theme="dark"] .mechanic-time-tracking-header {
+  box-shadow: 
+    0 4px 20px rgba(0, 0, 0, 0.3),
+    0 2px 10px rgba(255, 255, 255, 0.05) inset;
+}
+
+[data-theme="dark"] .stat-card:hover {
+  box-shadow: 0 12px 48px rgba(0, 0, 0, 0.4);
+}
+
+[data-theme="dark"] .modern-table tbody tr:hover {
+  background: linear-gradient(90deg, 
+    rgba(255, 255, 255, 0.02), 
+    rgba(255, 255, 255, 0.05), 
+    rgba(255, 255, 255, 0.02)
+  );
+}
+
+[data-theme="dark"] .form-control {
+  background: linear-gradient(135deg, 
+    rgba(30, 41, 59, 0.9), 
+    rgba(30, 41, 59, 1)
+  );
+  border-color: rgba(255, 255, 255, 0.1);
+}
+
+[data-theme="dark"] .form-control:focus {
+  box-shadow: 
+    0 0 0 3px rgba(var(--primary-rgb), 0.2),
+    0 4px 12px rgba(var(--primary-rgb), 0.3);
+}
+
+/* ===== RESPONSIVE ENHANCEMENTS ===== */
+
+/* Mobile Optimizations */
+@media (max-width: 768px) {
+  .stat-card {
+    padding: 1rem;
+  }
+  
+  .stat-card:hover {
+    transform: translateY(-2px) scale(1.01);
+  }
+  
+  .modern-table {
+    font-size: 0.875rem;
+  }
+  
+  .filter-button {
+    padding: 0.5rem 1rem;
+    font-size: 0.875rem;
+  }
+  
+  .toast-notification {
+    margin: 0.5rem;
+    padding: 1rem;
+  }
+}
+
+@media (max-width: 480px) {
+  .client-dashboard-header,
+  .mechanic-dashboard-header,
+  .admin-dashboard-header,
+  .admin-reports-header,
+  .admin-settings-header,
+  .mechanic-active-jobs-header,
+  .mechanic-job-details-header,
+  .mechanic-time-tracking-header {
+    padding: 1rem 0;
+  }
+  
+  .timer-display {
+    font-size: 1.5rem;
+  }
+  
+  .stat-card {
+    padding: 0.75rem;
+  }
+}
+
+/* ===== ACCESSIBILITY ENHANCEMENTS ===== */
+
+/* Focus States */
+.form-control:focus,
+.filter-button:focus,
+.toggle-switch:focus {
+  outline: 2px solid var(--primary-color);
+  outline-offset: 2px;
+}
+
+/* High Contrast Mode */
+@media (prefers-contrast: high) {
+  .stat-card,
+  .modern-table,
+  .form-control {
+    border: 2px solid currentColor;
+  }
+  
+  .status-badge,
+  .priority-high,
+  .priority-medium,
+  .priority-low {
+    border: 2px solid currentColor;
+  }
+}
+
+/* Reduced Motion */
+@media (prefers-reduced-motion: reduce) {
+  .stat-card,
+  .form-control,
+  .filter-button,
+  .status-badge,
+  .toggle-switch,
+  .loading-spinner {
+    animation: none !important;
+    transition: none !important;
+  }
+  
+  .stat-card:hover,
+  .form-control:focus {
+    transform: none;
+  }
+}
+
+/* ===== PRINT STYLES ===== */
+
+@media print {
+  .client-dashboard-header,
+  .mechanic-dashboard-header,
+  .admin-dashboard-header,
+  .admin-reports-header,
+  .admin-settings-header,
+  .mechanic-active-jobs-header,
+  .mechanic-job-details-header,
+  .mechanic-time-tracking-header {
+    background: white !important;
+    color: black !important;
+    box-shadow: none !important;
+  }
+  
+  .stat-card {
+    border: 1px solid black;
+    box-shadow: none !important;
+  }
+  
+  .modern-table {
+    border-collapse: collapse;
+  }
+  
+  .modern-table th,
+  .modern-table td {
+    border: 1px solid black;
+  }
+}

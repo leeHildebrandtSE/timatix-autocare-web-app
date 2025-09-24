@@ -1,8 +1,8 @@
 import React, { useEffect, useState } from "react";
-import { listUsers, addUser } from "../api/mockApi";
-import Button from "../components/ui/Button";
-import { useLoading } from "../hooks/useLoading";
-import { useToast } from "../hooks/useToast";
+import { listUsers, addUser } from "../../api/mockApi";
+import Button from "../../components/ui/Button";
+import { useLoading } from "../../hooks/useLoading";
+import { useToast } from "../../hooks/useToast";
 
 export default function Users() {
   const [users, setUsers] = useState([]);

@@ -1,8 +1,8 @@
 import React, { useEffect, useState } from "react";
-import { listJobs } from "../api/mockApi";
-import { useLoading } from "../hooks/useLoading";
-import { useToast } from "../hooks/useToast";
-import Button from "../components/ui/Button";
+import { listJobs } from "../../api/mockApi";
+import { useLoading } from "../../hooks/useLoading";
+import { useToast } from "../../hooks/useToast";
+import Button from "../../components/ui/Button";
 
 export default function Jobs() {
   const [jobs, setJobs] = useState([]);

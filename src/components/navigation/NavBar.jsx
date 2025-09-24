@@ -1,7 +1,7 @@
 import React from "react";
 import { Link, useLocation } from "react-router-dom";
-import { useTheme } from "../hooks/useTheme";
-import Button from "./ui/Button";
+import { useTheme } from "../../hooks/useTheme";
+import Button from "../ui/Button";
 
 export default function NavBar() {
   const loc = useLocation();
@@ -32,7 +32,7 @@ export default function NavBar() {
             <img src="images/logo_only.png" alt="Timatix AutoCare Logo" className="logo"></img>
           </div>
           <div className="brand-text" style={{ fontSize: '20px', fontWeight: '700', color: '#667eea' }}>
-            Timatix
+            AutoCare
           </div>
         </div>
 

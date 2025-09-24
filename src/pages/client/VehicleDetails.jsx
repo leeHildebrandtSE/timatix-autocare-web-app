@@ -1,10 +1,10 @@
 import React, { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
-import { listVehicles } from "../api/mockApi";
-import StatCard from "../components/StatCard";
-import Button from "../components/ui/Button";
-import { useLoading } from "../hooks/useLoading";
-import { useToast } from "../hooks/useToast";
+import { listVehicles } from "../../api/mockApi";
+import StatCard from "../../components/StatCard";
+import Button from "../../components/ui/Button";
+import { useLoading } from "../../hooks/useLoading";
+import { useToast } from "../../hooks/useToast";
 
 export default function VehicleDetails() {
   const [vehicle, setVehicle] = useState(null);

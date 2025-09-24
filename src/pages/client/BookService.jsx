@@ -1,8 +1,8 @@
 import React, { useEffect, useState } from "react";
-import { listVehicles, createBooking } from "../api/mockApi";
-import { useLoading } from "../hooks/useLoading";
-import Button from "../components/ui/Button";
-import { useToast } from "../hooks/useToast";
+import { listVehicles, createBooking } from "../../api/mockApi";
+import { useLoading } from "../../hooks/useLoading";
+import Button from "../../components/ui/Button";
+import { useToast } from "../../hooks/useToast";
 
 export default function BookService() {
   const [vehicles, setVehicles] = useState([]);
