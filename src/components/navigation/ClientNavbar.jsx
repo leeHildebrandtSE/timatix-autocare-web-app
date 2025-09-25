@@ -1,7 +1,7 @@
 // ClientNavbar.jsx
 import React from 'react';
 import { Link, useLocation } from 'react-router-dom';
-import { useAuth } from '../../contexts/AuthContext';
+import { useAuth } from '../../context/AuthContext';
 
 const ClientNavbar = () => {
   const location = useLocation();
