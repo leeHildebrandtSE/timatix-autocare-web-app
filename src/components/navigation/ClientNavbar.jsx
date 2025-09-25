@@ -1,7 +1,7 @@
-// ClientNavbar.jsx
+// src/components/navigation/ClientNavbar.jsx - FIXED VERSION
 import React from 'react';
 import { Link, useLocation } from 'react-router-dom';
-import { useAuth } from '../../context/AuthContext';
+import { useAuth } from '../../hooks/useAuth'; // Fixed import path
 
 const ClientNavbar = () => {
   const location = useLocation();
@@ -20,7 +20,6 @@ const ClientNavbar = () => {
     <nav className="bg-white shadow-lg border-b border-gray-200">
       <div className="container mx-auto px-6">
         <div className="flex items-center justify-between h-16">
-          {/* Logo */}
           <Link to="/client/dashboard" className="flex items-center gap-3">
             <div className="w-8 h-8 bg-gradient-to-r from-blue-500 to-blue-600 rounded-lg flex items-center justify-center text-white font-bold">
               T
@@ -28,7 +27,6 @@ const ClientNavbar = () => {
             <span className="text-xl font-bold text-gray-800">Timatix AutoCare</span>
           </Link>
           
-          {/* Navigation Links */}
           <div className="hidden md:flex items-center space-x-8">
             {navItems.map(item => (
               <Link
@@ -46,7 +44,6 @@ const ClientNavbar = () => {
             ))}
           </div>
           
-          {/* User Menu */}
           <div className="flex items-center gap-4">
             <Link
               to="/profile"

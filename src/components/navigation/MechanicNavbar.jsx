@@ -1,7 +1,7 @@
-// MechanicNavbar.jsx
+// src/components/navigation/MechanicNavbar.jsx - FIXED VERSION
 import React from 'react';
 import { Link, useLocation } from 'react-router-dom';
-import { useAuth } from '../../context/AuthContext';
+import { useAuth } from '../../hooks/useAuth'; // Fixed import path
 
 const MechanicNavbar = () => {
   const location = useLocation();
@@ -19,7 +19,6 @@ const MechanicNavbar = () => {
     <nav className="bg-white shadow-lg border-b border-gray-200">
       <div className="container mx-auto px-6">
         <div className="flex items-center justify-between h-16">
-          {/* Logo */}
           <Link to="/mechanic/dashboard" className="flex items-center gap-3">
             <div className="w-8 h-8 bg-gradient-to-r from-orange-500 to-orange-600 rounded-lg flex items-center justify-center text-white font-bold">
               T
@@ -27,7 +26,6 @@ const MechanicNavbar = () => {
             <span className="text-xl font-bold text-gray-800">Timatix AutoCare</span>
           </Link>
           
-          {/* Navigation Links */}
           <div className="hidden md:flex items-center space-x-8">
             {navItems.map(item => (
               <Link
@@ -45,7 +43,6 @@ const MechanicNavbar = () => {
             ))}
           </div>
           
-          {/* User Menu */}
           <div className="flex items-center gap-4">
             <Link
               to="/profile"

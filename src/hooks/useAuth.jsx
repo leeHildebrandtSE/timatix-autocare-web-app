@@ -1,5 +1,6 @@
+// src/hooks/useAuth.jsx - FIXED VERSION
 import { useContext } from 'react';
-import AuthContext from '../context/AuthContext';
+import { AuthContext } from '../context/AuthContext'; // Fixed: Use named import
 
 export const useAuth = () => {
   const context = useContext(AuthContext);

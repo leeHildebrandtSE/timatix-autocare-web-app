@@ -1,6 +1,8 @@
+
+// src/pages/shared/Login.jsx - FIXED VERSION
 import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
-import { useAuth } from '../../context/AuthContext';
+import { useAuth } from '../../hooks/useAuth'; // Fixed import path
 
 const Login = () => {
   const navigate = useNavigate();

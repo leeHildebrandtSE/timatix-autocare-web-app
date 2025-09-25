@@ -1,5 +1,6 @@
+// src/pages/shared/Profile.jsx - FIXED VERSION  
 import React, { useState } from 'react';
-import { useAuth } from '../../context/AuthContext';
+import { useAuth } from '../../hooks/useAuth'; // Fixed import path
 
 const Profile = () => {
   const { user, logout } = useAuth();
@@ -17,7 +18,6 @@ const Profile = () => {
   });
 
   const handleSaveProfile = () => {
-    // Mock save functionality
     console.log('Saving profile:', formData);
     setIsEditing(false);
     alert('Profile updated successfully!');
@@ -31,7 +31,6 @@ const Profile = () => {
       return;
     }
 
-    // Mock password change
     console.log('Changing password');
     setPasswordData({ currentPassword: '', newPassword: '', confirmPassword: '' });
     alert('Password changed successfully!');
