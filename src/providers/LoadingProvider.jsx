@@ -1,5 +1,5 @@
 import React, { useRef, useState, useCallback, useEffect } from "react";
-import { LoadingContext } from "./LoadingContext";
+import { LoadingContext } from "../context/LoadingContext";
 import { notifyWatchdog } from "../utils/loadingWatchdog";
 // Note: createLoadingController is available in tests at src/utils/loadingController.js
 
